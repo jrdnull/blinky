@@ -1,0 +1,5 @@
+<h1>New Paste</h1>
+<form name="pasteForm" class="form paste-form" ng-submit="submit()" novalidate>
+  <textarea name="text" class="form-control" rows="22" ng-model="paste.text" required></textarea>
+  <button type="submit" class="btn btn-primary pull-right" ng-disabled="!pasteForm.$valid">Submit</button>
+</form>

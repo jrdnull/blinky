@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="blinky">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,6 +15,10 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+  <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular.min.js"))"></script>
+  <script src="@routes.WebJarAssets.at(WebJarAssets.locate("angular-ui-router.min.js"))"></script>
+  <script src="@routes.Assets.at("js/app.js")"></script>
 </head>
 <body>
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -30,17 +34,18 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home</a></li>
+          <li><a ui-sref="home">Home</a></li>
+          <li><a ui-sref="paste">Paste</a></li>
         </ul>
       </div>
     </div>
   </div>
 
   <div class="container">
-    <h1>Hello, World!</h1>
+    <div ui-view></div>
   </div>
 
-  <script src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
-  <script src='@routes.WebJarAssets.at(WebJarAssets.locate("js/bootstrap.min.js"))'></script>
+  <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
+  <script src="@routes.WebJarAssets.at(WebJarAssets.locate("js/bootstrap.min.js"))"></script>
 </body>
 </html>

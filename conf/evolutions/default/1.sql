@@ -1,0 +1,11 @@
+# --- !Ups
+
+CREATE TABLE pastes (
+  `id` INTEGER PRIMARY KEY AUTO_INCREMENT,
+  `text` TEXT NOT NULL,
+  `created` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+# --- !Downs
+
+DROP TABLE pastes;
