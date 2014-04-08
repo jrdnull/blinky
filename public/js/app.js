@@ -12,13 +12,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
   });
 
   $stateProvider.state('paste', {
-    url: '/paste',
+    url: '/pastes/new',
     templateUrl: getTemplateUrl('paste'),
     controller: 'NewPasteCtrl'
   });
 
   $stateProvider.state('paste-view', {
-    url: '/:id',
+    url: '/pastes/:id',
     templateUrl: getTemplateUrl('paste-view'),
     controller: 'ViewPasteCtrl'
   });
