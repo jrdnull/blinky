@@ -17,19 +17,25 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'NewPasteCtrl'
   });
 
-  $stateProvider.state('paste.:id', {
-    url: '/id',
-    templateUrl: getTemplateUrl('paste.view')
+  $stateProvider.state('paste-view', {
+    url: '/:id',
+    templateUrl: getTemplateUrl('paste-view'),
+    controller: 'ViewPasteCtrl'
   });
 });
 
-app.controller('NewPasteCtrl', function($scope, $http) {
+app.controller('NewPasteCtrl', function($scope, $state, $http) {
   $scope.submit = function() {
     $http.post('/api/pastes', $scope.paste).success(function(data, status, headers, config) {
-      console.log(data);
-      // TODO display new paste
+      $state.go('paste-view', data, {});
     });
   }
+});
+
+app.controller('ViewPasteCtrl', function($scope, $stateParams, $http) {
+  $http.get('/api/pastes/' + $stateParams.id).success(function(data) {
+    $scope.paste = data;
+  });
 });
 
 function getTemplateUrl(name) {

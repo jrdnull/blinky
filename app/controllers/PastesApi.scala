@@ -1,7 +1,7 @@
 package controllers
 
 import models._
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.Controller
 import play.api.libs.json.{JsSuccess, JsError, Json}
 import play.api.libs.json.Json._
 import play.api.db.slick._
@@ -15,18 +15,20 @@ object PastesApi extends Controller {
     Ok(toJson(pastes.list))
   }
 
-  def show(id :Long) = Action {
-    NotImplemented
+  def show(id :Int) = DBAction { implicit rs =>
+    (for(p <- pastes if p.id === id) yield p).firstOption match {
+      case Some(p) => Ok(toJson(p))
+      case None => NotFound
+    }
   }
 
-  def create = DBAction(parse.json) {
-    implicit rs =>
-      (rs.request.body \ "text").validate[String] match {
-        case s: JsSuccess[String] => {
-          val id = (pastes.map(p => p.text) returning pastes.map(_.id)) += s.get
-          Ok(Json.obj("id" -> id))
-        }
-        case e: JsError => BadRequest
+  def create = DBAction(parse.json) { implicit rs =>
+    (rs.request.body \ "text").validate[String] match {
+      case s: JsSuccess[String] => {
+        val id = (pastes.map(p => p.text) returning pastes.map(_.id)) += s.get
+        Ok(Json.obj("id" -> id))
       }
+      case e: JsError => BadRequest
+    }
   }
 }
