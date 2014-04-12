@@ -38,6 +38,27 @@ app.controller('ViewPasteCtrl', function($scope, $stateParams, $http) {
   });
 });
 
+app.directive('paste', function($timeout, $interpolate) {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    link: function(scope, element, attrs) {
+      // there must be a better way to do this
+      $timeout(function() {
+        element.find('code').html(hljs.highlightAuto($interpolate(element.find('code').text())(scope)).value);
+      }, 50);
+    },
+    template: '<pre><code ng-transclude></code></pre>'
+  };
+});
+
+app.filter('dateObject', function() {
+  return function(date) {
+    return new Date(date);
+  }
+});
+
 function getTemplateUrl(name) {
   return 'assets/template/' + name + '.html';
 }
