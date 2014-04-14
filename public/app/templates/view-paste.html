@@ -1,2 +1,2 @@
-<h1>Paste {{ paste.id }} <small>{{ paste.created | dateObject | date: 'medium' }}</small></h1>
+<h1>{{ paste.title ? paste.title : 'Untitled Paste' }} <small>{{ paste.created | dateObject | date: 'medium' }}</small></h1>
 <paste>{{ paste.text }}</paste>
