@@ -8,26 +8,30 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider.state('home', {
     url: '/',
-    templateUrl: getTemplateUrl('home')
+    views: {
+      '': { templateUrl: getTemplateUrl('home') },
+      'newPaste@home': {
+        templateUrl: getTemplateUrl('new-paste'),
+        controller: 'NewPasteCtrl'
+      },
+      'recentPastes@home': {
+        templateUrl: getTemplateUrl('recent-pastes'),
+        controller: 'RecentPastesCtrl'
+      }
+    }
   });
 
   $stateProvider.state('paste', {
-    url: '/pastes/new',
-    templateUrl: getTemplateUrl('paste'),
-    controller: 'NewPasteCtrl'
-  });
-
-  $stateProvider.state('paste-view', {
-    url: '/pastes/:id',
-    templateUrl: getTemplateUrl('paste-view'),
+    url: '/:id',
+    templateUrl: getTemplateUrl('view-paste'),
     controller: 'ViewPasteCtrl'
   });
 });
 
 app.controller('NewPasteCtrl', function($scope, $state, $http) {
   $scope.submit = function() {
-    $http.post('/api/pastes', $scope.paste).success(function(data, status, headers, config) {
-      $state.go('paste-view', data, {});
+    $http.post('/api/pastes', $scope.paste).success(function(data) {
+      $state.go('paste', data, {});
     });
   }
 });
@@ -35,6 +39,12 @@ app.controller('NewPasteCtrl', function($scope, $state, $http) {
 app.controller('ViewPasteCtrl', function($scope, $stateParams, $http) {
   $http.get('/api/pastes/' + $stateParams.id).success(function(data) {
     $scope.paste = data;
+  });
+});
+
+app.controller('RecentPastesCtrl', function($scope, $http) {
+  $http.get('/api/pastes').success(function(data) {
+    $scope.pastes = data;
   });
 });
 
@@ -60,5 +70,5 @@ app.filter('dateObject', function() {
 });
 
 function getTemplateUrl(name) {
-  return 'assets/template/' + name + '.html';
+  return 'assets/app/template/' + name + '.html';
 }

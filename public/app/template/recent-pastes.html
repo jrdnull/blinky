@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="paste in pastes">
+      <td><a ui-sref="paste({ id: paste.id })">{{ paste.title ? paste.title : 'Untitled' }}</a></td>
+      <td>{{ paste.created | dateObject | date: 'short' }}</td>
+    </tr>
+  </tbody>
+</table>
