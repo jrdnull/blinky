@@ -35,5 +35,5 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 function getTemplateUrl(name) {
-  return 'assets/app/template/' + name + '.html';
+  return 'assets/app/templates/' + name + '.html';
 }
