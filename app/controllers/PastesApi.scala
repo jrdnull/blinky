@@ -2,13 +2,28 @@ package controllers
 
 import models._
 import play.api.mvc.Controller
-import play.api.libs.json.{JsSuccess, JsError, Json}
+import play.api.libs.json._
 import play.api.libs.json.Json._
 import play.api.db.slick._
 import play.api.db.slick.Config.driver.simple._
+import java.sql.Timestamp
+import play.api.data.validation.ValidationError
 
 object PastesApi extends Controller {
+
+  implicit val timestampWrites = new Writes[Timestamp] {
+    def writes(t: Timestamp): JsValue = toJson(t.getTime)
+  }
+
+  implicit val timestampReads = new Reads[Timestamp] {
+    def reads(j: JsValue): JsResult[Timestamp] = j match {
+      case JsNumber(d) => JsSuccess(new Timestamp(d.toLong))
+      case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.timestamp"))))
+    }
+  }
+
   implicit val pasteFormat = Json.format[Paste]
+
   val pastes = TableQuery[Pastes]
 
   def list = DBAction { implicit rs =>
