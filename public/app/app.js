@@ -28,7 +28,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   });
 
   $stateProvider.state('paste', {
-    url: '/:id',
+    url: '/pastes/:id',
     templateUrl: getTemplateUrl('view-paste'),
     controller: 'ViewPasteCtrl'
   });
