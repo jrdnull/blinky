@@ -11,6 +11,7 @@ controllers.controller('NewPasteCtrl', function ($scope, $state, $http) {
 });
 
 controllers.controller('ViewPasteCtrl', function ($scope, $stateParams, $http) {
+  $scope.paste = { text: 'Paste not found' };
   $http.get('/api/pastes/' + $stateParams.id).success(function (data) {
     $scope.paste = data;
   });
