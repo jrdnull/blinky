@@ -11,7 +11,7 @@ directives.directive('paste', function($timeout, $interpolate) {
       // there must be a better way to do this
       $timeout(function() {
         element.find('code').html(hljs.highlightAuto($interpolate(element.find('code').text())(scope)).value);
-      }, 50);
+      }, 500);
     },
     template: '<pre><code ng-transclude></code></pre>'
   };

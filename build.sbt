@@ -12,7 +12,8 @@ libraryDependencies ++= Seq(
   "org.webjars" % "highlightjs" % "8.0-3",
   "com.typesafe.slick" %% "slick" % "2.0.1",
   "org.slf4j" % "slf4j-nop" % "1.6.4",
-  "com.typesafe.play" %% "play-slick" % "0.6.0.1"
+  "com.typesafe.play" %% "play-slick" % "0.6.0.1",
+  "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 )
 
 playScalaSettings

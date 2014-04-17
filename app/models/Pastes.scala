@@ -5,11 +5,11 @@ import java.sql.Timestamp
 
 case class Paste(id: Int, text: String, title: String, created: Timestamp)
 
-class Pastes(tag: Tag) extends Table[Paste](tag, "PASTES") {
-  def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
-  def text = column[String]("TEXT")
-  def title = column[String]("TITLE")
-  def created = column[Timestamp]("CREATED")
+class Pastes(tag: Tag) extends Table[Paste](tag, "pastes") {
+  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  def text = column[String]("text")
+  def title = column[String]("title")
+  def created = column[Timestamp]("created")
 
   def * = (id, text, title, created) <> (Paste.tupled, Paste.unapply)
 }
