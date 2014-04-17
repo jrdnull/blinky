@@ -26,11 +26,11 @@ object PastesApi extends Controller {
 
   val pastes = TableQuery[Pastes]
 
-  def list = DBAction { implicit rs =>
-    Ok(toJson(pastes.sortBy(_.created.desc).list))
+  def list(offset: Int, limit: Int) = DBAction { implicit rs =>
+    Ok(toJson(pastes.sortBy(_.created.desc).drop(offset).take(limit).list))
   }
 
-  def show(id :Int) = DBAction { implicit rs =>
+  def show(id: Int) = DBAction { implicit rs =>
     (for(p <- pastes if p.id === id) yield p).firstOption match {
       case Some(p) => Ok(toJson(p))
       case None => NotFound

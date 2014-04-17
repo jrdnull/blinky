@@ -13,6 +13,6 @@ GET         /assets/*file         controllers.Assets.at(path="/public", file)
 # API Routes
 
 # Paste
-GET         /api/pastes            controllers.PastesApi.list
+GET         /api/pastes            controllers.PastesApi.list(offset: Int ?= 0, limit: Int ?= 5)
 GET         /api/pastes/:id        controllers.PastesApi.show(id: Int)
 POST        /api/pastes            controllers.PastesApi.create
