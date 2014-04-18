@@ -27,7 +27,7 @@ object PastesApi extends Controller {
   val pastes = TableQuery[Pastes]
 
   def list(offset: Int, limit: Int) = DBAction { implicit rs =>
-    Ok(toJson(pastes.sortBy(_.created.desc).drop(offset).take(limit).list))
+    Ok(toJson(pastes.filter(_.listed === true).sortBy(_.created.desc).drop(offset).take(limit).list))
   }
 
   def show(id: Int) = DBAction { implicit rs =>
@@ -41,7 +41,8 @@ object PastesApi extends Controller {
     (rs.request.body \ "text").validate[String] match {
       case s: JsSuccess[String] => {
         val title = (rs.request.body \ "title").validate[String].getOrElse("")
-        val id = (pastes.map(p => (p.text, p.title)) returning pastes.map(_.id)) += (s.get, title)
+        val listed = (rs.request.body \ "listed").validate[Boolean].getOrElse(true)
+        val id = (pastes.map(p => (p.text, p.title, p.listed)) returning pastes.map(_.id)) += (s.get, title, listed)
         Ok(Json.obj("id" -> id))
       }
       case e: JsError => BadRequest

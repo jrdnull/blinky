@@ -3,6 +3,7 @@
 var controllers = angular.module('blinky.controllers', ['ui.router']);
 
 controllers.controller('NewPasteCtrl', function($scope, $state, $http) {
+  $scope.paste = { title: '', text: '', listed: true };
   $scope.submit = function() {
     $http.post('/api/pastes', $scope.paste).success(function(data) {
       $state.go('paste', data, {});

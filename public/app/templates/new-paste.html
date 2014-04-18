@@ -1,5 +1,8 @@
 <form name="pasteForm" class="form paste-form" ng-submit="submit()" novalidate>
   <input type="text" class="form-control" placeholder="Name/Title" ng-model="paste.title">
   <textarea name="text" class="form-control" rows="22" ng-model="paste.text" required></textarea>
+  <label>
+    <input type="checkbox" ng-model="paste.listed"> Listed
+  </label>
   <button type="submit" class="btn btn-primary pull-right" ng-disabled="!pasteForm.$valid">Submit</button>
 </form>
